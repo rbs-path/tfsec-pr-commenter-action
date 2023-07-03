@@ -33,7 +33,7 @@ jobs:
       - name: Clone repo
         uses: actions/checkout@master
       - name: tfsec
-        uses: aquasecurity/tfsec-pr-commenter-action@v1.2.0
+        uses: aquasecurity/tfsec-pr-commenter-action@v1.4.0
         with:
           github_token: ${{ github.token }}
 ```
@@ -75,7 +75,7 @@ jobs:
       - name: Clone repo
         uses: actions/checkout@master
       - name: tfsec
-        uses: aquasecurity/tfsec-pr-commenter-action@v1.2.0
+        uses: aquasecurity/tfsec-pr-commenter-action@v1.4.0
         with:
           tfsec_args: --soft-fail
           github_token: ${{ github.token }}
@@ -104,3 +104,24 @@ tfsec_formats: sarif,csv
 The screenshot below demonstrates the comments that can be expected when using the action
 
 ![Example PR Comment](images/pr_commenter.png)
+
+
+## Run directly (and not in Docker)
+
+This will avoid, pulling and build a new docker image on each usage :
+
+```yaml
+name: tfsec-pr-commenter
+on:
+  pull_request:
+jobs:
+  tfsec:
+    name: tfsec PR commenter
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Clone repo
+        uses: actions/checkout@master
+      - name: tfsec
+        uses: aquasecurity/tfsec-pr-commenter-action/composite@v1.4.0
+```
